@@ -1,0 +1,9 @@
+{
+  "name": "chess-game",
+  "version": "1.0.0",
+  "description": "chess game",
+  "main": "scripts.js",
+  "author": "",
+  "license": "ISC",
+  "type": "module"
+}

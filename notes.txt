@@ -1,0 +1,29 @@
+// test environment
+
+define the move logic for each unique piece on piece_logic.js
+    highlight the squares that the piece can move to
+        rook - hihglight all the squares in a column and row (rook at c1 r1 highlight r1 and c1)
+               ** repeats until c or r is at limit (8) or until blocked
+        knight - (c+1, r+2), (c+2, r+1), 1st quadrant
+               - (c+1, r-2), (c+2, r-1), 2nd quadrant
+               - (c-1, r+2), (c-2, r+1), 3rd quadrant
+               - (c-1, r-2), (c-2, r-1) 4th quadrant
+        bishop - (c+1, r+1), top right
+               - (c+1, r-1), bottom right
+               - (c-1, r+1), top left
+               - (c-1, r-1) bottom left
+               ** repeats until c or r is at limit (8) or until blocked
+        pawn - (r+1) or (r+2)
+             - can only take enemies that are (c+1, r+1)-top right or (c-1, r+1)-top left
+        king - (c, r+1) move up
+             - (c, r-1) move down
+             - (c+1, r) move right
+             - (c-1, r) move left
+             - (c+1, r+1) move top right
+             - (c+1, r-1) move bottom right
+             - (c-1, r+1) move top left
+             - (c-1, r-1) move bottom right
+        queen - implement rook + bishop + king
+    get function to check if move is blocked
+remove b_ or w_ for piece_logic.js
+use selected_piece() to set the attribute for the piece using setAttribute() in js

@@ -1,0 +1,238 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>chess</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Mono&display=swap');
+
+        .forfeit {
+            position: absolute;
+            top: 30px;
+            left: 30px;
+            z-index: 1;
+            font-family: 'Noto Sans Mono', monospace;
+            font-size: larger;
+            font-weight: bold;
+            border: 2px solid black;
+            border-radius: 5px;
+            background-color: rgb(255, 255, 255);
+            color: rgb(0, 0, 0);
+            padding: 5px;
+        }
+        .forfeit:hover {
+            cursor: pointer;
+            background-color: rgb(0, 0, 0);
+            color: rgb(255, 255, 255);
+        }
+
+        div.flex-letter {
+            display: flex;
+            position: absolute;
+            justify-content: space-around;
+            align-items: center;
+
+            width: calc(64px*8);
+            top: calc(489px + 74px);
+            left: 395px;
+
+            z-index: 1;
+            font-weight: bold;
+        }
+        div.flex-number {
+            display: flex;
+            position: absolute;
+            flex-direction: column-reverse;
+            justify-content: space-around;
+            align-items: center;
+
+            height: calc(63px*8);
+            top: calc(-15px + 72.5px);
+            left: 371px;
+
+            z-index: 1;
+            font-weight: bold;
+        }
+        #turn-tracker {
+            position: absolute;
+            text-align: center;
+
+            font-size: larger;
+            font-family: 'Noto Sans Mono', monospace;
+
+            height: 30px; /* size and border of box */
+            width: 192px;
+            border: 2px solid black;
+
+            left: 528px;
+            top: 30px;
+
+            z-index: 1;
+        }
+        .turn-container span {
+            position: relative;
+            line-height: 30px;
+            opacity: 0;
+            transition: opacity .4s ease-in-out;
+        }
+        table {
+            margin-left: 360px;
+            margin-top: 80px;
+            border: solid black 2px;
+        }
+        td {
+            height: 62.29px;
+            width: 62.29px;
+            outline-offset: -1.5px;
+            position: relative;
+        }
+        td img {
+            width: 60%;
+            height: 60%;
+            position: relative;
+            object-fit: contain;
+
+            left: 12px;
+            z-index: 2;
+        }
+        td img[src=""] {
+            display: none;
+        }
+        td:hover {
+            cursor: pointer;
+        }
+        .piece_image {
+            object-fit: cover;
+        }
+        tr:nth-child(odd) td:nth-child(odd), tr:nth-child(even) td:nth-child(even) {
+            background: rgb(125, 148, 93);
+            outline: 1.5px solid rgb(125, 148, 93);
+        }
+        tr:nth-child(even) td:nth-child(odd), tr:nth-child(odd) td:nth-child(even) {
+            background: rgb(238, 238, 213);
+            outline: 1.5px solid rgb(238, 238, 213);
+        }
+    </style>
+</head>
+<body>
+    <div class="turn-container">
+        <span id="turn-tracker">White</span>
+    </div>
+
+    <div class="flex-letter">
+        <div>a</div>
+        <div>b</div>
+        <div>c</div>
+        <div>d</div>
+        <div>e</div>
+        <div>f</div>
+        <div>g</div>
+        <div>h</div>
+    </div>
+
+    <div class="flex-number">
+        <div>1</div>
+        <div>2</div>
+        <div>3</div>
+        <div>4</div>
+        <div>5</div>
+        <div>6</div>
+        <div>7</div>
+        <div>8</div>
+    </div>
+
+    <button class="forfeit">FORFEIT</button>
+
+    <table id="chess-board" cellspacing="0px">
+        <tr>
+            <td row="1" column="1" id="a8"><img src="./images/black_rook.png"></td>
+            <td row="1" column="2" id="b8"><img src="./images/black_knight.png"></td>
+            <td row="1" column="3" id="c8"><img src="./images/black_bishop.png"></td>
+            <td row="1" column="4" id="d8"><img src="./images/black_queen.png"></td>
+            <td row="1" column="5" id="e8"><img src="./images/black_king.png"></td>
+            <td row="1" column="6" id="f8"><img src="./images/black_bishop.png"></td>
+            <td row="1" column="7" id="g8"><img src="./images/black_knight.png"></td>
+            <td row="1" column="8" id="h8"><img src="./images/black_rook.png"></td>
+        </tr>
+        <tr>
+            <td row="2" column="1" id="a7"><img src="./images/black_pawn.png"></td>
+            <td row="2" column="2" id="b7"><img src="./images/black_pawn.png"></td>
+            <td row="2" column="3" id="c7"><img src="./images/black_pawn.png"></td>
+            <td row="2" column="4" id="d7"><img src="./images/black_pawn.png"></td>
+            <td row="2" column="5" id="e7"><img src="./images/black_pawn.png"></td>
+            <td row="2" column="6" id="f7"><img src="./images/black_pawn.png"></td>
+            <td row="2" column="7" id="g7"><img src="./images/black_pawn.png"></td>
+            <td row="2" column="8" id="h7"><img src="./images/black_pawn.png"></td>
+        </tr>
+        <tr>
+            <td row="3" column="1" id="a6"><img src=""></td>
+            <td row="3" column="2" id="b6"><img src=""></td>
+            <td row="3" column="3" id="c6"><img src=""></td>
+            <td row="3" column="4" id="d6"><img src=""></td>
+            <td row="3" column="5" id="e6"><img src=""></td>
+            <td row="3" column="6" id="f6"><img src=""></td>
+            <td row="3" column="7" id="g6"><img src=""></td>
+            <td row="3" column="8" id="h6"><img src=""></td>
+        </tr>
+        <tr>
+            <td row="4" column="1" id="a5"><img src=""></td>
+            <td row="4" column="2" id="b5"><img src=""></td>
+            <td row="4" column="3" id="c5"><img src=""></td>
+            <td row="4" column="4" id="d5"><img src=""></td>
+            <td row="4" column="5" id="e5"><img src=""></td>
+            <td row="4" column="6" id="f5"><img src=""></td>
+            <td row="4" column="7" id="g5"><img src=""></td>
+            <td row="4" column="8" id="h5"><img src=""></td>
+        </tr>
+        <tr>
+            <td row="5" column="1" id="a4"><img src=""></td>
+            <td row="5" column="2" id="b4"><img src=""></td>
+            <td row="5" column="3" id="c4"><img src=""></td>
+            <td row="5" column="4" id="d4"><img src=""></td>
+            <td row="5" column="5" id="e4"><img src=""></td>
+            <td row="5" column="6" id="f4"><img src=""></td>
+            <td row="5" column="7" id="g4"><img src=""></td>
+            <td row="5" column="8" id="h4"><img src=""></td>
+        </tr>
+        <tr>
+            <td row="6" column="1" id="a3"><img src=""></td>
+            <td row="6" column="2" id="b3"><img src=""></td>
+            <td row="6" column="3" id="c3"><img src=""></td>
+            <td row="6" column="4" id="d3"><img src=""></td>
+            <td row="6" column="5" id="e3"><img src=""></td>
+            <td row="6" column="6" id="f3"><img src=""></td>
+            <td row="6" column="7" id="g3"><img src=""></td>
+            <td row="6" column="8" id="h3"><img src=""></td>
+        </tr>
+        <tr>
+            <td row="7" column="1" id="a2"><img src="./images/white_pawn.png"></td>
+            <td row="7" column="2" id="b2"><img src="./images/white_pawn.png"></td>
+            <td row="7" column="3" id="c2"><img src="./images/white_pawn.png"></td>
+            <td row="7" column="4" id="d2"><img src="./images/white_pawn.png"></td>
+            <td row="7" column="5" id="e2"><img src="./images/white_pawn.png"></td>
+            <td row="7" column="6" id="f2"><img src="./images/white_pawn.png"></td>
+            <td row="7" column="7" id="g2"><img src="./images/white_pawn.png"></td>
+            <td row="7" column="8" id="h2"><img src="./images/white_pawn.png"></td>
+        </tr>
+        <tr>
+            <td row="8" column="1" id="a1"><img src="./images/white_rook.png"></td>
+            <td row="8" column="2" id="b1"><img src="./images/white_knight.png"></td>
+            <td row="8" column="3" id="c1"><img src="./images/white_bishop.png"></td>
+            <td row="8" column="4" id="d1"><img src="./images/white_queen.png"></td>
+            <td row="8" column="5" id="e1"><img src="./images/white_king.png"></td>
+            <td row="8" column="6" id="f1"><img src="./images/white_bishop.png"></td>
+            <td row="8" column="7" id="g1"><img src="./images/white_knight.png"></td>
+            <td row="8" column="8" id="h1"><img src="./images/white_rook.png"></td>
+        </tr>
+    </table>
+    
+    <script src="./script.js" type="module"></script>
+    <script src="./components/pawn.js" type="module"></script>
+    <script src="./components/rook.js" type="module"></script>
+    <script src="./components/knight.js" type="module"></script>
+    <script src="./components/bishop.js" type="module"></script>
+    <script src="./components/king.js" type="module"></script>
+    <script src="./components/queen.js" type="module"></script>
+</body>
+</html>
